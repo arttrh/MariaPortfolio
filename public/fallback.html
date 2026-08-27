@@ -4,16 +4,19 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Maria Eduarda — Contadora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --ink: #0a0a0a;
-    --paper: #ffffff;
-    --graphite: #333333;
-    --ash: #8a8a8a;
-    --hairline: rgba(10, 10, 10, 0.12);
+    --ink: #1d1d1d;
+    --paper: #f9f9f9;
+    --graphite: #424242;
+    --ash: #757575;
+    --hairline: #e0e0e0;
+    --cream: #efece5;
     --hairline-invert: rgba(255, 255, 255, 0.18);
-    --serif: Georgia, "Times New Roman", serif;
-    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    --sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
   }
 
   * { box-sizing: border-box; }
@@ -28,8 +31,8 @@
   a { color: inherit; }
 
   .hero {
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--cream);
+    color: var(--ink);
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -56,15 +59,15 @@
     font-size: 0.75rem;
     letter-spacing: 0.35em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--ash);
     margin: 0 0 1.5rem;
   }
 
   h1 {
-    font-family: var(--serif);
-    font-weight: 400;
+    font-weight: 800;
+    letter-spacing: -0.035em;
     font-size: 3rem;
-    line-height: 1.05;
+    line-height: 1.02;
     margin: 0;
   }
 
@@ -73,10 +76,8 @@
   }
 
   .headline {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.125rem;
+    color: var(--graphite);
     max-width: 28rem;
     margin: 2rem 0 0;
   }
@@ -91,23 +92,23 @@
 
   .btn {
     display: inline-block;
-    border: 1px solid rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--ash);
     padding: 0.75rem 1.5rem;
     font-size: 0.7rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     text-decoration: none;
-    color: var(--paper);
+    color: var(--ink);
     transition: background 0.2s ease, color 0.2s ease;
   }
 
-  .btn:hover { background: var(--paper); color: var(--ink); }
+  .btn:hover { background: var(--ink); color: var(--paper); }
 
   .photo-frame {
     max-width: 22rem;
     margin: 0 auto;
     aspect-ratio: 4 / 5;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid var(--hairline);
     overflow: hidden;
   }
 
@@ -135,8 +136,8 @@
   }
 
   .contact h2 {
-    font-family: var(--serif);
-    font-weight: 400;
+    font-weight: 800;
+    letter-spacing: -0.03em;
     font-size: 2.5rem;
     margin: 0 0 2.5rem;
   }

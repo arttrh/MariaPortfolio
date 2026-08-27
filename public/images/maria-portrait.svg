@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 700" role="img" aria-labelledby="t d">
+  <title id="t">Espaço reservado para a fotografia de Maria Eduarda</title>
+  <desc id="d">Substituir por uma fotografia profissional em preto e branco antes da publicação.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#f4f2ec" />
+      <stop offset="100%" stop-color="#e6e2d8" />
+    </linearGradient>
+    <linearGradient id="petal" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#cfc9bb" stop-opacity="0.55" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="700" fill="url(#bg)" />
+
+  <!-- Marca em marca-d'água, mesma geometria do componente Mark -->
+  <g transform="translate(800 320) scale(1.5)" opacity="0.5">
+    <g transform="rotate(0)   translate(0 -16)"><path d="M0 0 C -34 -10, -62 -46, -52 -84 C -45 -110, -14 -122, 0 -104 C 14 -122, 45 -110, 52 -84 C 62 -46, 34 -10, 0 0 Z" fill="url(#petal)" /></g>
+    <g transform="rotate(72)  translate(0 -16)"><path d="M0 0 C -34 -10, -62 -46, -52 -84 C -45 -110, -14 -122, 0 -104 C 14 -122, 45 -110, 52 -84 C 62 -46, 34 -10, 0 0 Z" fill="url(#petal)" /></g>
+    <g transform="rotate(144) translate(0 -16)"><path d="M0 0 C -34 -10, -62 -46, -52 -84 C -45 -110, -14 -122, 0 -104 C 14 -122, 45 -110, 52 -84 C 62 -46, 34 -10, 0 0 Z" fill="url(#petal)" /></g>
+    <g transform="rotate(216) translate(0 -16)"><path d="M0 0 C -34 -10, -62 -46, -52 -84 C -45 -110, -14 -122, 0 -104 C 14 -122, 45 -110, 52 -84 C 62 -46, 34 -10, 0 0 Z" fill="url(#petal)" /></g>
+    <g transform="rotate(288) translate(0 -16)"><path d="M0 0 C -34 -10, -62 -46, -52 -84 C -45 -110, -14 -122, 0 -104 C 14 -122, 45 -110, 52 -84 C 62 -46, 34 -10, 0 0 Z" fill="url(#petal)" /></g>
+  </g>
+
+  <text x="800" y="540" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="30" font-weight="700" letter-spacing="-0.5" fill="#212121" fill-opacity="0.72">Fotografia de Maria Eduarda</text>
+  <text x="800" y="580" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" fill="#757575">substituir este placeholder antes da publicação</text>
+</svg>

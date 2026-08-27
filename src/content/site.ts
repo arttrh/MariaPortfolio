@@ -1,21 +1,64 @@
-// Conteúdo do site. Preencha os campos marcados com "[INSIRA ...]" com dados reais
-// de Maria Eduarda antes de publicar. Nenhum dado abaixo foi inventado.
+// Conteúdo do site. Preencha os campos marcados com "[INSIRA ...]" com dados
+// reais de Maria Eduarda antes de publicar. Nenhum dado abaixo foi inventado.
+
+export const brand = {
+  wordmark: "maria eduarda",
+  shortmark: "me",
+  role: "Contadora",
+};
 
 export const hero = {
   name: "Maria Eduarda",
   role: "Contadora",
   headline: "[INSIRA CHAMADA CURTA — ex.: “Clareza e precisão em cada número”]",
-  photo: "/images/maria-hero.svg",
+  // Placeholder em formato paisagem (16:7). Trocar pelo arquivo real —
+  // ex.: "/images/maria.jpg" — mantendo proporção aproximada.
+  photo: "/images/maria-portrait.svg",
 };
 
-export const about = {
-  eyebrow: "Quem sou",
-  paragraphs: [
-    "[INSIRA aqui um parágrafo curto, em primeira pessoa, sobre a trajetória de Maria Eduarda na contabilidade — o que a levou à área e como ela trabalha hoje.]",
-    "[INSIRA um segundo parágrafo, opcional, sobre a forma como ela atende clientes ou o tipo de trabalho que mais a define.]",
+/** Seção de números — espelha o bloco de estatísticas da referência. */
+export const metrics = {
+  title: "Números que sustentam a confiança",
+  subtitle: "[INSIRA uma linha de contexto sobre a atuação de Maria Eduarda.]",
+  stats: [
+    {
+      value: "[N]",
+      label: "[INSIRA MÉTRICA — ex.: anos de atuação]",
+      detail: "[INSIRA detalhe curto da métrica.]",
+    },
+    {
+      value: "[N]",
+      label: "[INSIRA MÉTRICA — ex.: clientes atendidos]",
+      detail: "[INSIRA detalhe curto da métrica.]",
+    },
+    {
+      value: "[N]",
+      label: "[INSIRA MÉTRICA — ex.: registro no CRC]",
+      detail: "[INSIRA detalhe curto da métrica.]",
+    },
   ],
-  yearsActive: "[INSIRA ANO DE INÍCIO]",
+  notes: [
+    "[INSIRA uma observação real sobre o método de trabalho de Maria.]",
+    "[INSIRA uma segunda observação real.]",
+    "[INSIRA uma terceira observação real.]",
+  ],
 };
+
+/** Bloco editorial de três colunas — padrão “O que / Porquê / Como”. */
+export const editorial = [
+  {
+    heading: "O que",
+    body: "[INSIRA o que Maria Eduarda faz — serviços contábeis oferecidos, em texto corrido, sem lista.]",
+  },
+  {
+    heading: "Porquê",
+    body: "[INSIRA a motivação — o problema real que ela resolve para os clientes.]",
+  },
+  {
+    heading: "Como",
+    body: "[INSIRA o método — como ela conduz o trabalho, ferramentas e rotina de acompanhamento.]",
+  },
+];
 
 export type Specialty = {
   title: string;
@@ -63,17 +106,6 @@ export const experience: ExperienceItem[] = [
     title: "[INSIRA MARCO RELEVANTE NA CARREIRA]",
     place: "[INSIRA EMPRESA/ÓRGÃO]",
   },
-];
-
-export type Differentiator = {
-  value: string;
-  label: string;
-};
-
-export const differentiators: Differentiator[] = [
-  { value: "[N]", label: "[INSIRA DIFERENCIAL — ex.: anos de atuação]" },
-  { value: "[N]", label: "[INSIRA DIFERENCIAL — ex.: registro no CRC]" },
-  { value: "[N]", label: "[INSIRA DIFERENCIAL — ex.: área de especialização]" },
 ];
 
 export const contact = {

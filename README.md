@@ -1,133 +1,151 @@
 # Maria Eduarda — Portfólio (Contadora)
 
-Site one-page, editorial e minimalista, para a contadora Maria Eduarda. Construído com **Next.js (App Router) + TypeScript + Tailwind CSS v4**, seguindo o prompt mestre de design/desenvolvimento do projeto.
+Site one-page construído com **Next.js (App Router) + TypeScript + Tailwind CSS v4 + GSAP**.
 
-## 1. Direção de arte (resumo)
+O sistema visual e de movimento é portado do app **Flora** (`pquidute/Flora-Mobile`,
+Kotlin/Jetpack Compose) — tokens, escala tipográfica e curvas de animação vêm
+diretamente do código do app, adaptados para web. A identidade (marca, conteúdo,
+seções) é própria de Maria Eduarda.
 
-- **Paleta:** preto (`#0a0a0a`) e branco (`#ffffff`) puros, com cinzas neutros (`#333`, `#8a8a8a`) para hierarquia. Contraste máximo, sem cores corporativas.
-- **Tipografia:** `Fraunces` (serifada, editorial) para títulos e citações; `Inter` (sans-serif) para corpo de texto e UI.
-- **Layout:** seções alternam fundo branco/cinza-claro/preto para criar ritmo visual (Hero preto → Sobre branco → Especialidades cinza-claro → Trajetória branco → Diferenciais preto → Contato branco).
-- **Imagens:** foto principal em preto e branco (`grayscale`), moldura fina, tratamento editorial — sem stock genérico.
-- **Interações:** menu fixo discreto que aparece após o scroll inicial; revelação suave (`fade + translateY`) dos blocos de conteúdo via `IntersectionObserver`; `prefers-reduced-motion` respeitado.
+---
 
-## 2. Estrutura de arquivos
+## 1. Sistema portado do Flora
 
-```
-MariaPortfolio/
-├── public/
-│   ├── images/
-│   │   └── maria-hero.svg      # placeholder — substituir pela foto real
-│   └── fallback.html           # fallback estático (HTML/CSS puro, sem JS)
-├── src/
-│   ├── app/
-│   │   ├── layout.tsx          # fontes, <html lang="pt-BR">, metadata/SEO
-│   │   ├── page.tsx            # composição da página (uma rota só)
-│   │   └── globals.css         # tokens de cor, tipografia, animação
-│   ├── components/
-│   │   ├── Nav.tsx
-│   │   ├── Hero.tsx
-│   │   ├── About.tsx
-│   │   ├── Specialties.tsx
-│   │   ├── Experience.tsx
-│   │   ├── Differentiators.tsx
-│   │   ├── Contact.tsx
-│   │   ├── Footer.tsx
-│   │   └── Reveal.tsx           # wrapper de animação de entrada
-│   └── content/
-│       └── site.ts              # todo o conteúdo textual (placeholders)
-├── next.config.ts
-├── package.json
-└── README.md
-```
+### Cores — `presentation/theme/Color.kt`
 
-## 3. Componentes e props
+Neutros **quentes**, nunca preto/branco puros.
 
-| Componente | Fonte de dados | Descrição |
+| Token Flora | Hex | Uso no site |
 |---|---|---|
-| `Nav` | `links` (interno) | Menu fixo com âncoras; aparece após 60% da altura da viewport. |
-| `Hero` | `hero` (`content/site.ts`) | Nome, cargo, chamada e foto. |
-| `About` | `about` | Bloco "Quem sou", parágrafos + ano de início. |
-| `Specialties` | `specialties[]` | Grade 2 colunas de áreas de atuação (`title`, `description`). |
-| `Experience` | `experience[]` | Linha do tempo (`year`, `title`, `place`). |
-| `Differentiators` | `differentiators[]` | Bloco preto com números/diferenciais (`value`, `label`). |
-| `Contact` | `contact` | E-mail, WhatsApp e formulário (envia via `mailto:`). |
-| `Footer` | `hero` | Direitos autorais + cargo. |
-| `Reveal` | `children`, `delay` | Wrapper de fade-in ao entrar na viewport. |
+| `SoftBlack` | `#1D1D1D` | texto principal, seção invertida |
+| `SoftWhite` | `#F9F9F9` | fundo padrão |
+| `VeryLightGray` | `#FAFAFA` | superfícies alternadas |
+| `SoftGray` | `#EEEEEE` | containers |
+| `MediumLightGray` | `#E0E0E0` | bordas e divisores |
+| `NeutralGray` | `#BDBDBD` | bordas fortes |
+| `DarkGray` | `#757575` | legendas |
+| `VeryDarkGray` | `#424242` | corpo de texto |
+| `AlmostBlack` | `#212121` | títulos |
+| `DeepBlack` … `MediumDark` | `#0D0D0D`–`#3A3A3A` | tema escuro |
 
-Todo o conteúdo editável está centralizado em **`src/content/site.ts`** — não é necessário mexer nos componentes para atualizar textos.
+Tema escuro completo via `prefers-color-scheme`. O creme do hero
+(`#EFECE5`) reproduz o fundo do render de abertura da referência.
 
-## 4. Dados pendentes (placeholders)
+### Tipografia — `presentation/theme/Type.kt` e `TextStyles.kt`
 
-Nenhum dado foi inventado. Antes de publicar, preencha em `src/content/site.ts`:
+**Inter é a única família** (W400–W800) — o Flora usa `bodyFontFamily` também
+como `displayFontFamily`. Sem serifada em nenhum ponto.
 
-- [ ] `hero.headline` — chamada curta de efeito.
-- [ ] `hero.photo` — substituir `/public/images/maria-hero.svg` por uma fotografia real em preto e branco (`maria-hero.jpg`, atualizar o caminho).
-- [ ] `about.paragraphs` — bio real, em primeira pessoa, sem clichês genéricos.
-- [ ] `about.yearsActive` — ano de início de atuação.
-- [ ] `specialties[]` — 4 áreas reais de atuação contábil.
-- [ ] `experience[]` — formação, certificações e marcos reais, com datas.
-- [ ] `differentiators[]` — números reais (anos de experiência, registro no CRC, etc.). Remover o bloco caso não haja dado concreto.
-- [ ] `contact.email` e `contact.whatsapp` — dados de contato reais.
+- `.type-display` — 800, `letter-spacing: -0.035em`
+- `.type-heading` — 800, `-0.025em`
+- `.type-eyebrow` — 500, `+0.18em`, maiúsculas
 
-O mesmo conjunto de placeholders existe em `public/fallback.html` e deve ser atualizado em paralelo.
+O tracking negativo replica o `letterSpacing = (-0.3).sp` de `EnvCardTitle`.
 
-## 5. Rodando o projeto
+### Movimento — mapa de equivalência
+
+Os interpoladores do Compose viram eases GSAP em `src/lib/gsap.ts`:
+
+| Flora (Compose) | GSAP | Onde |
+|---|---|---|
+| `OvershootInterpolator(3f)` | `back.out(3)` | `EASE.overshoot` |
+| `spring(LowBouncy, VeryLow)` | `back.out(1.4)` | `EASE.spring` |
+| `FastOutSlowInEasing` | `power2.inOut` | `EASE.fastOutSlowIn` |
+
+Componentes portados:
+
+- **`Preloader`** ← `SplashScreen.kt`: escala 0→1 com overshoot (900 ms),
+  giro de 720° (2000 ms), pausa de 600 ms, saída.
+- **`FloatingLights`** ← `FloatingLightsBackground.kt`: 3 halos radiais em
+  deriva lenta (ciclos de 29–61 s) com alpha pulsando 0.15↔0.35.
+- **`ParticleField`** ← `ParticleBackground.kt`: 80 partículas de 1–5 px,
+  deriva de ±0.5 px/frame, wrap nas bordas, apenas cinzas.
+- **Cards** ← `EnvironmentCard.kt`: raio de 12 px (`--radius-card`) e entrada
+  com mola.
+
+---
+
+## 2. Estrutura
+
+```
+src/
+├── app/
+│   ├── layout.tsx        # Inter, metadata pt-BR
+│   ├── page.tsx          # composição da página
+│   └── globals.css       # tokens Flora + utilitários de tipo
+├── components/
+│   ├── Mark.tsx          # marca radial (5 lâminas, geometria própria)
+│   ├── Preloader.tsx     # splash
+│   ├── FloatingLights.tsx
+│   ├── ParticleField.tsx
+│   ├── Nav.tsx           # menu fixo, rola na horizontal no mobile
+│   ├── Hero.tsx          # marca + display + creme
+│   ├── Editorial.tsx     # O que / Porquê / Como + retrato
+│   ├── Metrics.tsx       # números (contagem animada) + citações
+│   ├── Showcase.tsx      # especialidades em moldura de janela
+│   ├── Experience.tsx    # trajetória
+│   ├── Contact.tsx       # seção invertida + partículas
+│   └── Footer.tsx
+├── content/site.ts       # TODO o conteúdo editável
+└── lib/gsap.ts           # eases, useGsap, useReducedMotion
+```
+
+`public/fallback.html` é a versão estática (sem JS) das seções Hero e Contato,
+já nos tokens novos.
+
+---
+
+## 3. Dados pendentes
+
+Nada foi inventado. Preencher em **`src/content/site.ts`**:
+
+- [ ] `hero.headline` — chamada curta.
+- [ ] `hero.photo` — trocar `/images/maria-portrait.svg` pela foto real
+      (formato paisagem, ~16:7).
+- [ ] `editorial[]` — textos de *O que / Porquê / Como*.
+- [ ] `metrics.stats[]` — números reais. Valores numéricos ganham contagem
+      animada automaticamente; placeholders `[N]` passam intactos.
+- [ ] `metrics.notes[]` — observações reais sobre o método de trabalho.
+- [ ] `specialties[]` — 4 áreas de atuação.
+- [ ] `experience[]` — formação, certificações e marcos com datas.
+- [ ] `contact.email` / `contact.whatsapp`.
+
+Atualizar `public/fallback.html` em paralelo.
+
+---
+
+## 4. Comandos
 
 ```bash
 npm install
-npm run dev      # desenvolvimento (http://localhost:3000)
-npm run build    # build de produção
-npm run start    # servir o build de produção
-npm run lint     # eslint
+npm run dev      # desenvolvimento
+npm run build    # build de produção (saída estática)
+npm run start    # servir o build
+npm run lint
 ```
 
-O fallback estático pode ser aberto diretamente (`public/fallback.html`) ou acessado em `/fallback.html` quando o servidor Next estiver rodando.
+---
 
-## 6. Acessibilidade e performance
+## 5. Acessibilidade e performance
 
-- Contraste preto/branco ≈ 21:1 (WCAG AAA para texto).
-- HTML semântico (`<header>` implícito via `<section>`, `<main>`, `<nav>`, `<footer>`, `<ol>` na trajetória).
-- Foco visível (`:focus-visible`) e navegação por teclado funcional em todos os links/botões.
-- `prefers-reduced-motion` desativa transições e scroll suave.
-- Fontes carregadas via `next/font` (self-hosted, sem layout shift, sem chamada de terceiros em runtime).
-- Imagem do hero com `priority` + `sizes` adequado; demais seções são texto/CSS, sem custo extra de rede.
-- Build estático (`○ (Static)`) confirmado via `npm run build`.
+- `prefers-reduced-motion` desliga **todas** as animações e dispensa a splash;
+  o conteúdo aparece imediatamente (verificado no navegador).
+- Contraste conferido nos fundos invertidos — as legendas da seção de contato
+  usam `inverse-fg/70` em vez do cinza padrão, que ficaria em 3.7:1.
+- HTML semântico, foco visível, `aria-label` nos ícones e âncoras com
+  `scroll-mt-24` para não ficarem sob o menu fixo.
+- Inter via `next/font` (self-hosted, sem CLS). Build 100% estático.
+- Menu rola na horizontal em telas estreitas — nenhum link fica inacessível.
 
-## 7. Comparativo de tecnologia
+---
 
-| Item | **Next.js + Tailwind** (escolhido) | React + Vite + Tailwind |
-|---|---|---|
-| Tipo | Framework full-stack (SSR/SSG, roteamento automático) | SPA build tool, roteamento manual |
-| Vantagens | SSG nativo (bom SEO), otimização de imagem/fonte integrada, convenções claras (`app/`) | Início de projeto leve, HMR instantâneo, bundle mínimo |
-| Desvantagens | Mais ferramentas embutidas para aprender | SEO/SSR manuais; menos convenções |
-| Esforço de implementação | Scaffold + Tailwind já integrados; `next/image`, `next/font` prontos | Exigiria configurar Vite, Tailwind, meta tags e otimização de imagem manualmente |
-| Indicado para | Portfólios com SEO e conteúdo majoritariamente estático (este projeto) | SPAs simples onde o tempo de setup é o fator crítico |
+## 6. Verificação realizada
 
-Para este portfólio — uma página estática, com foco em SEO e carregamento rápido — **Next.js + Tailwind** foi a escolha implementada.
-
-## 8. Cronograma (referência)
-
-```mermaid
-gantt
-    dateFormat  YYYY-MM-DD
-    title Cronograma do Projeto de Portfólio
-    section Preparação
-    Direção de arte e arquitetura :done, a1, 2026-08-27, 1d
-    section Desenvolvimento
-    Implementação dos componentes :done, a2, after a1, 1d
-    Testes (responsividade + acessibilidade) :done, a3, after a2, 1d
-    section Conteúdo
-    Preenchimento de dados reais :active, a4, after a3, 3d
-    Fotografia profissional :a5, after a3, 3d
-    section Publicação
-    Revisão final e deploy :a6, after a4, 1d
-```
-
-## 9. Status de aceitação
-
-- [x] Todas as seções da arquitetura definida estão implementadas.
-- [x] Paleta, tipografia e ritmo visual seguem a direção de arte definida.
-- [x] Nenhum conteúdo fictício — apenas placeholders explícitos.
-- [x] Build de produção sem erros (`npm run build`) e lint limpo (`npm run lint`).
-- [x] Testado em desktop (1440px) e mobile (390px) via Chromium/Playwright — menu fixo legível sobre fundos claros e escuros, âncoras não ficam cobertas pelo menu, sem overflow horizontal.
-- [ ] Preenchimento de dados reais e fotografia (pendente do cliente — ver seção 4).
+| Item | Resultado |
+|---|---|
+| `npm run build` | sem erros, rotas estáticas |
+| `npm run lint` / `tsc --noEmit` | limpos |
+| Console do navegador | sem erros |
+| Overflow horizontal | ausente em 1440px e 390px |
+| Movimento reduzido | splash dispensada, 6/6 seções em opacidade 1 |
+| Mobile 390px | menu completo alcançável via rolagem |
