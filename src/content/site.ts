@@ -113,27 +113,47 @@ export const differentiators: Differentiator[] = [
   { value: "[N]", label: "[INSIRA DIFERENCIAL — ex.: área de especialização]" },
 ];
 
+/**
+ * Trilha de trabalho — a linha do tempo da carreira.
+ *
+ * Ordem cronológica, do mais antigo para o mais recente. `description` é
+ * opcional: quando vazia, a etapa fica só com ano, título e local.
+ *
+ * Publique apenas etapas reais e verificáveis. Uma trilha curta e honesta
+ * sustenta mais confiança do que uma longa com datas aproximadas — e o
+ * visitante que checar vai checar.
+ */
 export type TrajectoryItem = {
   year: string;
   title: string;
   place: string;
+  description?: string;
 };
 
 export const trajectory: TrajectoryItem[] = [
   {
     year: "[ANO]",
-    title: "[INSIRA FORMAÇÃO — ex.: Graduação em Ciências Contábeis]",
-    place: "[INSIRA INSTITUIÇÃO]",
+    title: "[INSIRA A FORMAÇÃO — ex.: Graduação em Ciências Contábeis]",
+    place: "[INSIRA A INSTITUIÇÃO]",
+    description: "[Opcional: o que essa etapa acrescentou à prática dela.]",
   },
   {
     year: "[ANO]",
-    title: "[INSIRA CERTIFICAÇÃO OU CARGO]",
-    place: "[INSIRA EMPRESA/ÓRGÃO]",
+    title: "[INSIRA O PRIMEIRO CARGO OU ESTÁGIO NA ÁREA]",
+    place: "[INSIRA A EMPRESA/ÓRGÃO]",
+    description: "[Opcional: rotinas e responsabilidades reais desse período.]",
   },
   {
     year: "[ANO]",
-    title: "[INSIRA MARCO RELEVANTE NA CARREIRA]",
-    place: "[INSIRA EMPRESA/ÓRGÃO]",
+    title: "[INSIRA CERTIFICAÇÃO OU REGISTRO PROFISSIONAL]",
+    place: "[INSIRA O ÓRGÃO EMISSOR]",
+    description: "[Opcional: o que a certificação habilita na prática.]",
+  },
+  {
+    year: "[ANO]",
+    title: "[INSIRA O MARCO MAIS RECENTE]",
+    place: "[INSIRA A EMPRESA/ÓRGÃO]",
+    description: "[Opcional: o que ela faz hoje, em termos concretos.]",
   },
 ];
 
