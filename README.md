@@ -54,14 +54,32 @@ Os interpoladores do Compose viram eases GSAP em `src/lib/gsap.ts`:
 
 Componentes portados:
 
-- **`Preloader`** ← `SplashScreen.kt`: escala 0→1 com overshoot (900 ms),
-  giro de 720° (2000 ms), pausa de 600 ms, saída.
+- **`Preloader`**: abertura tipográfica — o nome sobe atrás de uma máscara,
+  a régua se desenha e a tela sai para cima.
 - **`FloatingLights`** ← `FloatingLightsBackground.kt`: 3 halos radiais em
   deriva lenta (ciclos de 29–61 s) com alpha pulsando 0.15↔0.35.
 - **`ParticleField`** ← `ParticleBackground.kt`: 80 partículas de 1–5 px,
   deriva de ±0.5 px/frame, wrap nas bordas, apenas cinzas.
 - **Cards** ← `EnvironmentCard.kt`: raio de 12 px (`--radius-card`) e entrada
   com mola.
+
+### Abertura (não portada — desenho próprio)
+
+O hero **não** segue a composição do Flora. A referência aqui é o princípio
+usado por sites de atleta (landonorris.com): a pessoa ocupa o quadro e o nome
+funciona como marca — sem copiar layout, cores ou componentes.
+
+A leitura é uma narrativa de contratação, de cima para baixo na coluna
+esquerda:
+
+1. **Nome** em Inter ExtraBold, duas linhas, revelado por máscara.
+2. **Função** — contadora.
+3. **Promessa** — a chamada curta.
+4. **Prova** — cartão de credenciais com registro no CRC, foco e praça.
+
+O retrato recortado sangra na base e recebe paralaxe sutil no cursor; a
+palavra-fantasma ao fundo dá escala. O antigo símbolo floral foi removido —
+era justamente o elemento herdado da referência.
 
 ---
 
@@ -74,12 +92,11 @@ src/
 │   ├── page.tsx          # composição da página
 │   └── globals.css       # tokens Flora + utilitários de tipo
 ├── components/
-│   ├── Mark.tsx          # marca radial (5 lâminas, geometria própria)
-│   ├── Preloader.tsx     # splash
+│   ├── Preloader.tsx     # abertura tipográfica
 │   ├── FloatingLights.tsx
 │   ├── ParticleField.tsx
 │   ├── Nav.tsx           # menu fixo, rola na horizontal no mobile
-│   ├── Hero.tsx          # marca + display + creme
+│   ├── Hero.tsx          # retrato recortado + nome-marca + credenciais
 │   ├── Editorial.tsx     # O que / Porquê / Como + retrato
 │   ├── Metrics.tsx       # números (contagem animada) + citações
 │   ├── Showcase.tsx      # especialidades em moldura de janela
@@ -100,8 +117,12 @@ já nos tokens novos.
 Nada foi inventado. Preencher em **`src/content/site.ts`**:
 
 - [ ] `hero.headline` — chamada curta.
-- [ ] `hero.photo` — trocar `/images/maria-portrait.svg` pela foto real
-      (formato paisagem, ~16:7).
+- [ ] `hero.cutout` — **prioritário**: trocar `/images/maria-cutout.svg` por
+      um PNG dela com fundo transparente (recorte da cintura para cima,
+      olhando para a câmera). É o retrato que conduz a abertura.
+- [ ] `hero.credential` — status, registro no CRC, foco de atuação e cidade.
+      É o que dá credibilidade logo na primeira tela.
+- [ ] `hero.photo` — foto de apoio da seção Sobre (paisagem, ~16:7).
 - [ ] `editorial[]` — textos de *O que / Porquê / Como*.
 - [ ] `metrics.stats[]` — números reais. Valores numéricos ganham contagem
       animada automaticamente; placeholders `[N]` passam intactos.

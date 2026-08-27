@@ -9,11 +9,33 @@ export const brand = {
 
 export const hero = {
   name: "Maria Eduarda",
+  firstName: "Maria",
+  lastName: "Eduarda",
   role: "Contadora",
   headline: "[INSIRA CHAMADA CURTA — ex.: “Clareza e precisão em cada número”]",
-  // Placeholder em formato paisagem (16:7). Trocar pelo arquivo real —
-  // ex.: "/images/maria.jpg" — mantendo proporção aproximada.
+  ghostWord: "contabilidade",
+
+  /**
+   * Retrato recortado (fundo transparente) — é ELE que carrega a abertura.
+   * Trocar por um PNG/WebP com recorte real: "/images/maria.png".
+   * Enquadramento ideal: da cintura para cima, olhando para a câmera.
+   */
+  cutout: "/images/maria-cutout.svg",
+
+  /** Foto de apoio, formato paisagem, usada na seção Sobre. */
   photo: "/images/maria-portrait.svg",
+
+  ctaLabel: "Falar com Maria",
+
+  /** Cartão de credenciais — o sinal de confiança de uma contadora. */
+  credential: {
+    status: "[INSIRA STATUS — ex.: Disponível para novos clientes]",
+    rows: [
+      { label: "Registro", value: "[INSIRA CRC — ex.: CRC-SP 000000/O]" },
+      { label: "Atuação", value: "[INSIRA FOCO — ex.: PJ e planejamento tributário]" },
+      { label: "Base", value: "[INSIRA CIDADE/UF]" },
+    ],
+  },
 };
 
 /** Seção de números — espelha o bloco de estatísticas da referência. */

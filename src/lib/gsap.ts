@@ -58,7 +58,7 @@ export function useReducedMotion(): boolean {
  * elementos ficam no estado final (garantido pelo CSS em globals.css).
  */
 export function useGsap(
-  setup: (ctx: { scope: HTMLElement }) => void,
+  setup: (ctx: { scope: HTMLElement }) => void | (() => void),
   scope: RefObject<HTMLElement | null>,
   deps: unknown[] = []
 ) {
