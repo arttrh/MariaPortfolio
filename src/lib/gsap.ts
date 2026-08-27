@@ -13,17 +13,12 @@ if (typeof window !== "undefined") {
 }
 
 /*
-  Eases equivalentes aos interpoladores do Flora (Compose):
-
-  - OvershootInterpolator(3f)  -> "back.out(3)"        (SplashScreen.kt)
-  - Spring(LowBouncy/VeryLow)  -> "back.out(1.4)"      (EnvironmentCard.kt)
-  - FastOutSlowInEasing        -> "power2.inOut"       (FloatingLightsBackground.kt)
+  O briefing pede animações "muito sutis". Só entram curvas de saída suave —
+  nada de overshoot, mola ou bounce, que chamariam atenção para si mesmas.
 */
 export const EASE = {
-  overshoot: "back.out(3)",
-  spring: "back.out(1.4)",
-  fastOutSlowIn: "power2.inOut",
-  standard: "power3.out",
+  out: "power2.out",
+  inOut: "power2.inOut",
 } as const;
 
 const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
@@ -39,11 +34,7 @@ function subscribeReducedMotion(onChange: () => void) {
   return () => mq.removeEventListener("change", onChange);
 }
 
-/**
- * Lê a media query de movimento reduzido como uma store externa — o caminho
- * idiomático no React para dados do browser com SSR (o servidor renderiza
- * como `false` e o cliente corrige na hidratação).
- */
+/** Lê a media query de movimento reduzido como store externa (compatível com SSR). */
 export function useReducedMotion(): boolean {
   return useSyncExternalStore(
     subscribeReducedMotion,
@@ -53,9 +44,9 @@ export function useReducedMotion(): boolean {
 }
 
 /**
- * Cria um gsap.context com escopo em `scope`, revertido automaticamente no
- * unmount. Quando o usuário pede movimento reduzido, o callback não roda e os
- * elementos ficam no estado final (garantido pelo CSS em globals.css).
+ * Cria um gsap.context com escopo em `scope`, revertido no unmount.
+ * Com movimento reduzido o callback não roda e os elementos ficam no estado
+ * final, garantido pelo CSS em globals.css.
  */
 export function useGsap(
   setup: (ctx: { scope: HTMLElement }) => void | (() => void),
@@ -66,11 +57,11 @@ export function useGsap(
     const el = scope.current;
     if (!el) return;
 
-    el.classList.add("anim-ready");
+    el.classList.add("reveal-ready");
     if (prefersReducedMotion()) return;
 
-    // `setup` é intencionalmente capturado uma vez por mudança de `deps`:
-    // as timelines não devem ser recriadas a cada render.
+    // `setup` é capturado uma vez por mudança de `deps`: as timelines não
+    // devem ser recriadas a cada render.
     const ctx = gsap.context(() => setup({ scope: el }), el);
     return () => ctx.revert();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -78,28 +69,23 @@ export function useGsap(
 }
 
 /**
- * Reveal padrão do site: fade + subida curta, disparado ao entrar na viewport.
- * Espelha o ritmo de entrada das telas do Flora.
+ * Reveal padrão do site: fade curto com deslocamento de poucos pixels,
+ * disparado quando a seção entra na viewport.
  */
-export function revealOnScroll(
-  targets: gsap.TweenTarget,
-  options: { stagger?: number; y?: number; delay?: number; trigger?: Element } = {}
-) {
-  const { stagger = 0.09, y = 24, delay = 0, trigger } = options;
+export function revealIn(scope: HTMLElement, selector = "[data-reveal]") {
+  const targets = scope.querySelectorAll(selector);
+  if (!targets.length) return;
 
-  return gsap.fromTo(
+  gsap.fromTo(
     targets,
-    { opacity: 0, y },
+    { opacity: 0, y: 14 },
     {
       opacity: 1,
       y: 0,
-      duration: 0.85,
-      ease: EASE.standard,
-      stagger,
-      delay,
-      scrollTrigger: trigger
-        ? { trigger, start: "top 82%", once: true }
-        : undefined,
+      duration: 0.7,
+      ease: EASE.out,
+      stagger: 0.07,
+      scrollTrigger: { trigger: scope, start: "top 80%", once: true },
     }
   );
 }
