@@ -1,8 +1,7 @@
 "use client";
 
 import { useRef, useState, type FormEvent } from "react";
-import { gsap, EASE, useGsap } from "@/lib/gsap";
-import ParticleField from "@/components/ParticleField";
+import { useGsap, revealIn } from "@/lib/gsap";
 import { contact } from "@/content/site";
 
 export default function Contact() {
@@ -11,22 +10,7 @@ export default function Contact() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
-  useGsap(({ scope }) => {
-    const q = gsap.utils.selector(scope);
-
-    gsap.fromTo(
-      q("[data-anim]"),
-      { opacity: 0, y: 26 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.85,
-        ease: EASE.standard,
-        stagger: 0.08,
-        scrollTrigger: { trigger: scope, start: "top 78%", once: true },
-      }
-    );
-  }, root);
+  useGsap(({ scope }) => revealIn(scope), root);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -36,52 +20,58 @@ export default function Contact() {
   };
 
   const fieldClass =
-    "mt-2 w-full border-0 border-b border-border bg-transparent py-2 text-inverse-fg outline-none transition-colors focus:border-inverse-fg placeholder:text-inverse-fg/50";
+    "mt-2 w-full rounded-xl border border-hairline-dark bg-transparent px-4 py-3 text-[17px] text-paper outline-none transition-colors focus:border-paper";
 
   return (
     <section
       ref={root}
       id="contato"
       aria-label="Contato"
-      className="relative scroll-mt-24 overflow-hidden bg-inverse-bg py-28 text-inverse-fg sm:py-36"
+      className="scroll-mt-16 bg-ink px-6 py-32 text-paper sm:px-10 sm:py-44"
     >
-      <ParticleField className="opacity-60" />
-
-      <div className="relative mx-auto grid max-w-6xl grid-cols-1 gap-14 px-6 sm:px-10 md:grid-cols-2 md:gap-20">
+      <div className="mx-auto grid max-w-6xl gap-16 md:grid-cols-2 md:gap-24">
         <div>
-          <h2
-            data-anim
-            className="type-display text-4xl sm:text-6xl"
-          >
-            {contact.cta}
+          <h2 data-reveal className="t-title text-balance">
+            {contact.title}
           </h2>
-          <div className="mt-10 space-y-4 text-sm">
+          <p data-reveal className="t-intro mt-7 max-w-md text-fog">
+            {contact.intro}
+          </p>
+
+          <div className="mt-12 space-y-5">
             <a
-              data-anim
+              data-reveal
               href={`mailto:${contact.email}`}
-              className="block w-fit border-b border-inverse-fg/30 pb-1 transition-colors hover:border-current"
+              className="block w-fit text-[17px] text-paper underline decoration-hairline-dark underline-offset-[6px] transition-colors hover:decoration-paper"
             >
               {contact.email}
             </a>
             <a
-              data-anim
+              data-reveal
               href={contact.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Conversar no WhatsApp"
-              className="block w-fit border-b border-inverse-fg/30 pb-1 transition-colors hover:border-current"
+              aria-label={`Conversar no WhatsApp — ${contact.phoneLabel}`}
+              className="block w-fit text-[17px] text-paper underline decoration-hairline-dark underline-offset-[6px] transition-colors hover:decoration-paper"
             >
-              WhatsApp
+              WhatsApp · {contact.phoneLabel}
+            </a>
+            <a
+              data-reveal
+              href={contact.instagram.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Instagram de Maria Eduarda, ${contact.instagram.handle}`}
+              className="block w-fit text-[17px] text-paper underline decoration-hairline-dark underline-offset-[6px] transition-colors hover:decoration-paper"
+            >
+              Instagram · {contact.instagram.handle}
             </a>
           </div>
         </div>
 
-        <form data-anim onSubmit={handleSubmit} className="space-y-6" noValidate>
+        <form data-reveal onSubmit={handleSubmit} className="space-y-6" noValidate>
           <div>
-            <label
-              htmlFor="name"
-              className="type-eyebrow text-[10px] text-inverse-fg/70"
-            >
+            <label htmlFor="name" className="t-caption text-fog">
               Nome
             </label>
             <input
@@ -95,10 +85,7 @@ export default function Contact() {
             />
           </div>
           <div>
-            <label
-              htmlFor="email"
-              className="type-eyebrow text-[10px] text-inverse-fg/70"
-            >
+            <label htmlFor="email" className="t-caption text-fog">
               E-mail
             </label>
             <input
@@ -112,17 +99,14 @@ export default function Contact() {
             />
           </div>
           <div>
-            <label
-              htmlFor="message"
-              className="type-eyebrow text-[10px] text-inverse-fg/70"
-            >
+            <label htmlFor="message" className="t-caption text-fog">
               Mensagem
             </label>
             <textarea
               id="message"
               name="message"
               required
-              rows={3}
+              rows={4}
               value={message}
               onChange={(event) => setMessage(event.target.value)}
               className={`${fieldClass} resize-none`}
@@ -130,7 +114,7 @@ export default function Contact() {
           </div>
           <button
             type="submit"
-            className="rounded-[var(--radius-card)] border border-current px-6 py-3 type-eyebrow text-[10px] transition-colors hover:bg-inverse-fg hover:text-inverse-bg"
+            className="rounded-full bg-paper px-8 py-3.5 text-[17px] font-medium text-ink transition-opacity hover:opacity-85"
           >
             Enviar
           </button>

@@ -1,24 +1,24 @@
-import Preloader from "@/components/Preloader";
-import Nav from "@/components/Nav";
+import SubNav from "@/components/SubNav";
 import Hero from "@/components/Hero";
-import Editorial from "@/components/Editorial";
-import Metrics from "@/components/Metrics";
-import Showcase from "@/components/Showcase";
-import Experience from "@/components/Experience";
+import Overture from "@/components/Overture";
+import Chapters from "@/components/Chapters";
+import Highlights from "@/components/Highlights";
+import Differentiators from "@/components/Differentiators";
+import Trajectory from "@/components/Trajectory";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
     <>
-      <Preloader />
-      <Nav />
+      <SubNav />
       <main className="flex-1">
         <Hero />
-        <Editorial />
-        <Metrics />
-        <Showcase />
-        <Experience />
+        <Overture />
+        <Chapters />
+        <Highlights />
+        <Differentiators />
+        <Trajectory />
         <Contact />
       </main>
       <Footer />

@@ -1,19 +1,19 @@
-import { brand, hero } from "@/content/site";
+import { brand } from "@/content/site";
 
 export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border bg-background py-10">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-5 px-6 text-xs text-caption sm:flex-row sm:px-10">
+    <footer className="border-t border-hairline-light bg-paper px-6 py-10 sm:px-10">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 sm:flex-row">
         <div className="flex items-baseline gap-3">
-          <span className="type-heading text-sm lowercase text-heading">
+          <span className="text-[15px] font-semibold tracking-[-0.02em] text-ink">
             {brand.wordmark}
           </span>
-          <span className="type-eyebrow text-[10px]">{hero.role}</span>
+          <span className="t-caption text-slate">{brand.role}</span>
         </div>
-        <p>
-          © {year} {hero.name}. Todos os direitos reservados.
+        <p className="t-caption text-slate">
+          © {year} {brand.wordmark}. Todos os direitos reservados.
         </p>
       </div>
     </footer>
