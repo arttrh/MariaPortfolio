@@ -142,7 +142,19 @@ export const contact = {
   intro:
     "[INSIRA uma linha convidando ao contato — direta, sem promessa comercial.]",
   email: "[INSIRA EMAIL]",
-  whatsapp: "[INSIRA LINK DO WHATSAPP — ex.: https://wa.me/55XXXXXXXXXXX]",
+
+  /** (11) 99457-6383 — informado pela Maria. */
+  phoneLabel: "(11) 99457-6383",
+  whatsapp: "https://wa.me/5511994576383",
+
+  /**
+   * Handle visto no perfil que você compartilhou. CONFIRME antes de publicar:
+   * um @ errado manda visitante para a conta de outra pessoa.
+   */
+  instagram: {
+    handle: "@_eduarrdasiilva",
+    href: "https://instagram.com/_eduarrdasiilva",
+  },
 };
 
 /**

@@ -21,7 +21,7 @@ export default function Hero() {
   useEffect(() => {
     let cancelled = false;
 
-    // Sem WebGL não há palco 3D — o degradê de fundo já sustenta a cena.
+    // Sem WebGL não há pilha 3D — o fundo preto já sustenta a cena sozinho.
     const supportsWebGL = (() => {
       try {
         const canvas = document.createElement("canvas");
@@ -36,7 +36,7 @@ export default function Hero() {
 
     if (!supportsWebGL) return;
 
-    import("@/components/Stage3D").then((mod) => {
+    import("@/components/PaperStack").then((mod) => {
       if (!cancelled) setStage(() => mod.default);
     });
 

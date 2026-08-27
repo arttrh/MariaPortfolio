@@ -51,10 +51,20 @@ export default function Contact() {
               href={contact.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Conversar no WhatsApp"
+              aria-label={`Conversar no WhatsApp — ${contact.phoneLabel}`}
               className="block w-fit text-[17px] text-paper underline decoration-hairline-dark underline-offset-[6px] transition-colors hover:decoration-paper"
             >
-              WhatsApp
+              WhatsApp · {contact.phoneLabel}
+            </a>
+            <a
+              data-reveal
+              href={contact.instagram.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Instagram de Maria Eduarda, ${contact.instagram.handle}`}
+              className="block w-fit text-[17px] text-paper underline decoration-hairline-dark underline-offset-[6px] transition-colors hover:decoration-paper"
+            >
+              Instagram · {contact.instagram.handle}
             </a>
           </div>
         </div>
