@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Espaço reservado para foto de Maria Eduarda</title>
+  <desc id="desc">Substituir por uma fotografia profissional em preto e branco antes da publicação.</desc>
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="38%" r="65%">
+      <stop offset="0%" stop-color="#3a3a3a" />
+      <stop offset="55%" stop-color="#141414" />
+      <stop offset="100%" stop-color="#020202" />
+    </radialGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.08" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="1000" fill="#050505" />
+  <rect width="800" height="1000" fill="url(#glow)" />
+
+  <ellipse cx="400" cy="430" rx="230" ry="260" fill="none" stroke="url(#edge)" stroke-width="1.5" />
+
+  <path d="M400 260c-72 0-118 60-118 150 0 78 44 168 118 214 74-46 118-136 118-214 0-90-46-150-118-150z"
+        fill="#e9e6df" opacity="0.06" />
+
+  <line x1="120" y1="640" x2="680" y2="640" stroke="#ffffff" stroke-opacity="0.14" stroke-width="1" />
+
+  <text x="400" y="700" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="34" fill="#f5f3ee" fill-opacity="0.85" letter-spacing="1">Maria Eduarda</text>
+  <text x="400" y="734" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#f5f3ee" fill-opacity="0.55" letter-spacing="4">CONTADORA</text>
+
+  <text x="400" y="954" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#ffffff" fill-opacity="0.35" letter-spacing="0.5">substituir por fotografia real antes da publicação</text>
+</svg>

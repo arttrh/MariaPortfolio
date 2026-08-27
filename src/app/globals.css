@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+/*
+  Design tokens portados do app Flora (com.senai.flora.presentation.theme).
+  Referência: theme/Color.kt, theme/Type.kt, theme/TextStyles.kt
+  Neutros quentes — nunca preto/branco puros.
+*/
+
+:root {
+  /* Core — tons quentes */
+  --flora-soft-black: #1d1d1d;
+  --flora-soft-white: #f9f9f9;
+
+  /* Rampa clara */
+  --flora-very-light-gray: #fafafa;
+  --flora-soft-gray: #eeeeee;
+  --flora-medium-light-gray: #e0e0e0;
+  --flora-neutral-gray: #bdbdbd;
+  --flora-dark-gray: #757575;
+  --flora-very-dark-gray: #424242;
+  --flora-almost-black: #212121;
+
+  /* Rampa escura */
+  --flora-deep-black: #0d0d0d;
+  --flora-barely-black: #121212;
+  --flora-subtle-dark: #1e1e1e;
+  --flora-soft-dark: #2a2a2a;
+  --flora-medium-dark: #3a3a3a;
+  --flora-bright-gray: #e8e8e8;
+  --flora-light-neutral: #cccccc;
+  --flora-muted-gray: #aaaaaa;
+
+  /* Creme do hero (fundo do render 3D de referência) */
+  --flora-cream: #efece5;
+  --flora-cream-deep: #e4e0d6;
+
+  /* Papéis semânticos — tema claro */
+  --background: var(--flora-soft-white);
+  --surface: var(--flora-very-light-gray);
+  --surface-container: var(--flora-soft-gray);
+  --foreground: var(--flora-soft-black);
+  --heading: var(--flora-almost-black);
+  --body: var(--flora-very-dark-gray);
+  --caption: var(--flora-dark-gray);
+  --border: var(--flora-medium-light-gray);
+  --border-strong: var(--flora-neutral-gray);
+  --inverse-bg: var(--flora-soft-black);
+  --inverse-fg: var(--flora-soft-white);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: var(--flora-barely-black);
+    --surface: var(--flora-subtle-dark);
+    --surface-container: var(--flora-soft-dark);
+    --foreground: var(--flora-bright-gray);
+    --heading: var(--flora-bright-gray);
+    --body: var(--flora-light-neutral);
+    --caption: var(--flora-muted-gray);
+    --border: var(--flora-medium-dark);
+    --border-strong: var(--flora-soft-dark);
+    --inverse-bg: var(--flora-soft-white);
+    --inverse-fg: var(--flora-soft-black);
+    --flora-cream: #151515;
+    --flora-cream-deep: #0d0d0d;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-container: var(--surface-container);
+  --color-foreground: var(--foreground);
+  --color-heading: var(--heading);
+  --color-body: var(--body);
+  --color-caption: var(--caption);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-inverse-bg: var(--inverse-bg);
+  --color-inverse-fg: var(--inverse-fg);
+  --color-cream: var(--flora-cream);
+  --color-cream-deep: var(--flora-cream-deep);
+
+  /* Inter é a única família — igual ao Flora (Type.kt) */
+  --font-sans: var(--font-inter);
+
+  --radius-card: 12px;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/*
+  Escala tipográfica do Flora: Inter ExtraBold com tracking negativo
+  nos tamanhos de display (TextStyles.kt — EnvCardTitle usa -0.3sp @ 36sp).
+*/
+.type-display {
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+}
+
+.type-heading {
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.type-eyebrow {
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Rolagem horizontal sem barra visível (menu em telas estreitas). */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Estado inicial das animações GSAP — evita flash antes do JS assumir. */
+[data-anim] {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.js-disabled [data-anim],
+.anim-ready [data-anim] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  [data-anim] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
