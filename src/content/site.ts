@@ -158,10 +158,17 @@ export const contact = {
 };
 
 /**
- * Retrato em preto e branco, usado como elemento editorial.
- * Trocar por uma fotografia real antes de publicar.
+ * Retrato editorial, exibido em preto e branco pelo filtro CSS.
+ *
+ * A foto atual saiu das imagens que você enviou (recorte 4:5, 1000×1250).
+ * Há uma alternativa em `/images/maria-retrato-alt.jpg` — é só trocar o
+ * caminho aqui.
+ *
+ * Vale trocar por uma foto feita para isso quando der: enquadramento da
+ * cintura para cima, luz frontal e fundo limpo rendem bem mais nesse quadro.
  */
 export const portrait = {
-  src: "/images/maria-portrait.svg",
-  alt: "Maria Eduarda, contadora",
+  src: "/images/maria-retrato.jpg",
+  alt: "Retrato de Maria Eduarda, contadora",
+  caption: "[INSIRA uma legenda curta ou deixe vazio para ocultar.]",
 };
