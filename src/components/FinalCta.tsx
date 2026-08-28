@@ -57,6 +57,7 @@ export default function FinalCta() {
             className="btn btn-primary mt-8 inline-flex"
           >
             {finalCta.primaryCta.label}
+            <span aria-hidden className="btn-arrow">→</span>
           </a>
         </div>
 

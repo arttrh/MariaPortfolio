@@ -43,6 +43,7 @@ export default function Header() {
             className="btn btn-primary hidden px-5 py-2.5 text-[14px] sm:inline-flex"
           >
             Falar com Maria
+            <span aria-hidden className="btn-arrow">→</span>
           </a>
 
           <button
@@ -85,6 +86,7 @@ export default function Header() {
               className="btn btn-primary mt-2 w-full"
             >
               Falar com Maria
+              <span aria-hidden className="btn-arrow">→</span>
             </a>
           </nav>
         </div>

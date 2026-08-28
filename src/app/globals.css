@@ -3,27 +3,32 @@
 /*
   Sistema visual — identidade própria para Maria Eduarda.
 
-  Paleta neutra e quente (não preto/branco puros) com uma única cor de
-  marca (argila/cobre), usada com parcimônia: CTAs sólidos, links, ícones
-  e pequenos detalhes de identidade. O restante da hierarquia vem de
-  tipografia, espaço e proporção — não de mais cor.
+  Paleta neutra e quente (não preto/branco puros) com um vinho profundo como
+  cor de marca — deliberadamente fora do clichê argila/terracota que virou
+  padrão em todo template de "consultoria boutique". Usada com parcimônia:
+  CTAs sólidos, links, ícones e pequenos detalhes de identidade. O restante
+  da hierarquia vem de tipografia, espaço e proporção — não de mais cor.
 */
 
 :root {
   --ink: #17130f; /* fundo dos blocos escuros, texto principal sobre claro */
   --paper: #fbf8f3; /* fundo padrão — marfim, não branco puro */
   --paper-strong: #ffffff; /* superfícies elevadas sobre o marfim */
-  --sand: #f1e9dd; /* seções alternadas, áreas neutras */
+  --sand: #f1e2dc; /* seções alternadas — neutro com sutil viés rosado, não amarelado */
   --stone: #4b443b; /* texto secundário sobre claro */
   --mute: #6a6255; /* legendas sobre claro — ~5.7:1 */
   --fog: #b9af9f; /* texto secundário sobre escuro — ~7:1 */
 
-  --accent: #a8632e; /* argila — detalhes, ícones, ênfases decorativas */
-  --accent-strong: #7c4a22; /* argila escura — fundo sólido de CTA (com texto marfim) */
-  --accent-on-dark: #d79a5d; /* argila clara — links e destaques sobre fundo escuro */
+  --accent: #8c2a3a; /* vinho — ícones, marcadores, ênfases decorativas */
+  --accent-strong: #5c1620; /* vinho profundo — fundo sólido de CTA (com texto marfim), ~12:1 */
+  --accent-strong-deep: #3d0e15; /* vinho quase preto — hover do CTA sólido */
+  --accent-on-dark: #d98c93; /* rosa empoeirado — eyebrows/links sobre fundo escuro, ~7:1 */
+  --accent-tint: rgba(140, 42, 58, 0.08); /* preenchimento sutil no hover dos botões secundários */
 
   --line: rgba(23, 19, 15, 0.12);
   --line-dark: rgba(251, 248, 243, 0.16);
+
+  --radius-btn: 12px;
 }
 
 @theme inline {
@@ -37,6 +42,7 @@
 
   --color-accent: var(--accent);
   --color-accent-strong: var(--accent-strong);
+  --color-accent-strong-deep: var(--accent-strong-deep);
   --color-accent-on-dark: var(--accent-on-dark);
 
   --color-line: var(--line);
@@ -148,27 +154,41 @@
     letter-spacing: 0;
   }
 
-  /* Botões — um único componente para os dois contextos (claro/escuro). */
+  /*
+    Botões — cantos discretamente arredondados (não pílula), com hover que
+    muda de cor de verdade (não só opacidade) e uma seta que se desloca. É
+    um único sistema para os dois contextos (claro/escuro).
+  */
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    border-radius: 999px;
-    padding: 0.9rem 2rem;
+    gap: 0.6rem;
+    border-radius: var(--radius-btn);
+    padding: 0.95rem 1.85rem;
     font-family: var(--font-sans);
     font-size: 1rem;
     font-weight: 500;
     letter-spacing: -0.006em;
+    background: transparent;
     transition:
       transform 0.2s ease,
-      opacity 0.2s ease,
-      border-color 0.2s ease,
-      background-color 0.2s ease;
+      color 0.25s ease,
+      border-color 0.25s ease,
+      background-color 0.25s ease;
   }
 
   .btn:active {
     transform: scale(0.98);
+  }
+
+  .btn-arrow {
+    display: inline-block;
+    transition: transform 0.25s ease;
+  }
+
+  .btn:hover .btn-arrow {
+    transform: translateX(4px);
   }
 
   .btn-primary {
@@ -177,25 +197,29 @@
   }
 
   .btn-primary:hover {
-    opacity: 0.9;
+    background: var(--accent-strong-deep);
   }
 
   .btn-secondary-light {
-    border: 1px solid var(--line);
+    border: 1.5px solid var(--line);
     color: var(--ink);
   }
 
   .btn-secondary-light:hover {
-    border-color: var(--ink);
+    border-color: var(--accent-strong);
+    background: var(--accent-tint);
+    color: var(--accent-strong);
   }
 
   .btn-secondary-dark {
-    border: 1px solid var(--line-dark);
+    border: 1.5px solid var(--line-dark);
     color: var(--paper);
   }
 
   .btn-secondary-dark:hover {
-    border-color: var(--paper);
+    border-color: var(--accent-on-dark);
+    color: var(--accent-on-dark);
+    background: color-mix(in srgb, var(--accent-on-dark) 12%, transparent);
   }
 
   /* Rolagem horizontal sem barra visível. */
