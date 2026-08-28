@@ -1,49 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState, type ComponentType } from "react";
+import { useRef } from "react";
+import Image from "next/image";
 import { gsap, EASE, useGsap } from "@/lib/gsap";
 import { hero } from "@/content/site";
 
 /**
- * Palco de abertura: fundo preto sangrando, objeto escultural ao centro e
- * tipografia de display sobre ele. A hierarquia é a do briefing —
- * nome → função → frase curta de impacto → ação.
- *
- * O objeto 3D entra por import dinâmico depois da montagem: ele nunca deve
- * atrasar a primeira pintura do texto, que é o conteúdo que importa.
+ * Palco de abertura. A fotografia de Maria é o elemento visual principal —
+ * nenhum efeito decorativo compete com ela. Hierarquia: eyebrow → headline
+ * → subheadline → ações, com a foto ancorando a composição ao lado.
  */
 export default function Hero() {
   const root = useRef<HTMLElement>(null);
-  const [Stage, setStage] = useState<ComponentType<{ className?: string }> | null>(
-    null
-  );
-
-  useEffect(() => {
-    let cancelled = false;
-
-    // Sem WebGL não há pilha 3D — o fundo preto já sustenta a cena sozinho.
-    const supportsWebGL = (() => {
-      try {
-        const canvas = document.createElement("canvas");
-        return Boolean(
-          window.WebGLRenderingContext &&
-            (canvas.getContext("webgl") || canvas.getContext("experimental-webgl"))
-        );
-      } catch {
-        return false;
-      }
-    })();
-
-    if (!supportsWebGL) return;
-
-    import("@/components/PaperStack").then((mod) => {
-      if (!cancelled) setStage(() => mod.default);
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   useGsap(({ scope }) => {
     const q = gsap.utils.selector(scope);
@@ -51,22 +19,16 @@ export default function Hero() {
     gsap
       .timeline({ delay: 0.1 })
       .fromTo(
-        q("[data-hero-line]"),
-        { yPercent: 108 },
-        { yPercent: 0, duration: 0.95, ease: EASE.out, stagger: 0.08 }
+        q("[data-hero-fade]"),
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.8, ease: EASE.out, stagger: 0.1 }
       )
       .fromTo(
-        q("[data-hero-fade]"),
-        { opacity: 0, y: 16 },
-        { opacity: 1, y: 0, duration: 0.7, ease: EASE.out, stagger: 0.09 },
-        "-=0.55"
+        q("[data-hero-photo]"),
+        { opacity: 0, scale: 1.04 },
+        { opacity: 1, scale: 1, duration: 1, ease: EASE.out },
+        "-=0.6"
       );
-
-    gsap.fromTo(
-      q("[data-stage]"),
-      { opacity: 0 },
-      { opacity: 1, duration: 1.4, ease: EASE.out, delay: 0.25 }
-    );
   }, root);
 
   return (
@@ -74,75 +36,58 @@ export default function Hero() {
       ref={root}
       id="topo"
       aria-label="Abertura"
-      className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-ink text-paper"
+      className="relative isolate overflow-hidden bg-ink text-paper"
     >
-      <div className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-center px-6 pb-6 pt-20 text-center sm:px-10">
-        <p data-hero-fade className="t-eyebrow uppercase text-fog">
-          {hero.role}
-        </p>
+      <div className="mx-auto grid w-full max-w-6xl gap-14 px-6 py-24 sm:px-10 sm:py-32 md:grid-cols-[1.05fr_0.95fr] md:items-center md:gap-16 md:py-36">
+        <div>
+          <p data-hero-fade className="t-eyebrow text-accent-on-dark">
+            {hero.eyebrow}
+          </p>
 
-        <h1 className="mt-5">
-          <span className="sr-only">
-            {hero.name} — {hero.role}
-          </span>
-          <span aria-hidden className="block overflow-hidden">
-            <span data-hero-line className="t-display block">
-              {hero.name}
-            </span>
-          </span>
-        </h1>
+          <h1 data-hero-fade className="t-display mt-6 text-balance">
+            {hero.headline}
+          </h1>
 
-        <p
-          data-hero-fade
-          className="t-headline mt-7 max-w-3xl text-balance text-paper"
-        >
-          {hero.statement}
-        </p>
+          <p data-hero-fade className="t-subheadline mt-7 max-w-lg text-balance text-fog">
+            {hero.subheadline}
+          </p>
 
-        <p
-          data-hero-fade
-          className="t-intro mt-6 max-w-xl text-balance text-fog"
-        >
-          {hero.intro}
-        </p>
+          <div data-hero-fade className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+            <a
+              href={hero.primaryCta.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary w-full sm:w-auto"
+            >
+              {hero.primaryCta.label}
+            </a>
+            <a href={hero.secondaryCta.href} className="btn btn-secondary-dark w-full sm:w-auto">
+              {hero.secondaryCta.label}
+            </a>
+          </div>
 
-        <div
-          data-hero-fade
-          className="mt-9 flex flex-col items-center gap-4 sm:flex-row"
-        >
-          <a
-            href={hero.primaryCta.href}
-            className="rounded-full bg-paper px-8 py-3.5 text-[17px] font-medium text-ink transition-opacity hover:opacity-85"
-          >
-            {hero.primaryCta.label}
-          </a>
-          <a
-            href={hero.secondaryCta.href}
-            className="rounded-full border border-hairline-dark px-8 py-3.5 text-[17px] font-medium text-paper transition-colors hover:border-paper"
-          >
-            {hero.secondaryCta.label}
-          </a>
-        </div>
-      </div>
-
-      {/*
-        O objeto fica em fluxo, abaixo do texto — nunca sobreposto a ele.
-        Assim o contraste do display é garantido pela estrutura, e não por
-        ajustes finos de iluminação que quebrariam em outra tela.
-      */}
-      <div className="relative h-[30svh] w-full shrink-0 sm:h-[34svh]">
-        <div data-stage className="absolute inset-0 opacity-0">
-          {Stage ? <Stage className="h-full w-full" /> : null}
+          <p data-hero-fade className="t-caption mt-8 flex items-center gap-2 text-fog">
+            <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent-on-dark" />
+            {hero.signal}
+          </p>
         </div>
 
-        {/* Assenta o objeto na base da seção. */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-24"
-          style={{
-            background: "linear-gradient(to top, #000 12%, transparent 100%)",
-          }}
-        />
+        <div data-hero-photo className="relative mx-auto w-full max-w-sm md:max-w-none">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[var(--radius-stage)] bg-sand">
+            <Image
+              src={hero.photo.src}
+              alt={hero.photo.alt}
+              fill
+              priority
+              sizes="(min-width: 768px) 32rem, 85vw"
+              className="object-cover"
+            />
+          </div>
+          <div
+            aria-hidden
+            className="absolute -bottom-5 -left-5 hidden h-24 w-24 rounded-2xl border border-line-dark sm:block"
+          />
+        </div>
       </div>
     </section>
   );
