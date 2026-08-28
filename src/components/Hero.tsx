@@ -60,9 +60,11 @@ export default function Hero() {
               className="btn btn-primary w-full sm:w-auto"
             >
               {hero.primaryCta.label}
+              <span aria-hidden className="btn-arrow">→</span>
             </a>
             <a href={hero.secondaryCta.href} className="btn btn-secondary-dark w-full sm:w-auto">
               {hero.secondaryCta.label}
+              <span aria-hidden className="btn-arrow">→</span>
             </a>
           </div>
 

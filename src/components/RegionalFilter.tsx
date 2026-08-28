@@ -54,7 +54,7 @@ export default function RegionalFilter() {
           value={city}
           onChange={(event) => setCity(event.target.value)}
           placeholder={regionalFilter.placeholder}
-          className="w-full rounded-full border border-line bg-paper px-5 py-3 text-[16px] text-ink outline-none transition-colors focus:border-accent-strong sm:flex-1"
+          className="w-full rounded-xl border border-line bg-paper px-5 py-3 text-[16px] text-ink outline-none transition-colors focus:border-accent-strong sm:flex-1"
         />
         <button type="submit" className="btn btn-primary shrink-0">
           {regionalFilter.buttonLabel}

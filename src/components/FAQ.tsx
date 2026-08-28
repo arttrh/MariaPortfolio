@@ -38,6 +38,7 @@ export default function FAQ() {
             className="btn btn-secondary-light mt-6 inline-flex"
           >
             Falar com Maria
+            <span aria-hidden className="btn-arrow">→</span>
           </a>
         </div>
 
