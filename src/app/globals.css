@@ -1,140 +1,226 @@
 @import "tailwindcss";
 
 /*
-  Sistema visual — preto e branco puros, conforme <visual_system> do briefing.
-  Contraste máximo (21:1) entre #000 e #fff; cinzas apenas para hierarquia.
-  Sem cores corporativas, sem gradientes chamativos.
+  Sistema visual — identidade própria para Maria Eduarda.
+
+  Paleta neutra e quente (não preto/branco puros) com uma única cor de
+  marca (argila/cobre), usada com parcimônia: CTAs sólidos, links, ícones
+  e pequenos detalhes de identidade. O restante da hierarquia vem de
+  tipografia, espaço e proporção — não de mais cor.
 */
 
 :root {
-  --ink: #000000;
-  --paper: #ffffff;
-  --mist: #f7f7f7;      /* áreas neutras claras */
-  --graphite: #333333;  /* texto secundário sobre claro */
-  --slate: #6e6e73;     /* legendas sobre claro — 4.9:1 */
-  --fog: #86868b;       /* legendas sobre escuro — 5.7:1 */
-  --hairline-light: rgba(0, 0, 0, 0.12);
-  --hairline-dark: rgba(255, 255, 255, 0.18);
+  --ink: #17130f; /* fundo dos blocos escuros, texto principal sobre claro */
+  --paper: #fbf8f3; /* fundo padrão — marfim, não branco puro */
+  --paper-strong: #ffffff; /* superfícies elevadas sobre o marfim */
+  --sand: #f1e9dd; /* seções alternadas, áreas neutras */
+  --stone: #4b443b; /* texto secundário sobre claro */
+  --mute: #6a6255; /* legendas sobre claro — ~5.7:1 */
+  --fog: #b9af9f; /* texto secundário sobre escuro — ~7:1 */
+
+  --accent: #a8632e; /* argila — detalhes, ícones, ênfases decorativas */
+  --accent-strong: #7c4a22; /* argila escura — fundo sólido de CTA (com texto marfim) */
+  --accent-on-dark: #d79a5d; /* argila clara — links e destaques sobre fundo escuro */
+
+  --line: rgba(23, 19, 15, 0.12);
+  --line-dark: rgba(251, 248, 243, 0.16);
 }
 
 @theme inline {
   --color-ink: var(--ink);
   --color-paper: var(--paper);
-  --color-mist: var(--mist);
-  --color-graphite: var(--graphite);
-  --color-slate: var(--slate);
+  --color-paper-strong: var(--paper-strong);
+  --color-sand: var(--sand);
+  --color-stone: var(--stone);
+  --color-mute: var(--mute);
   --color-fog: var(--fog);
-  --color-hairline-light: var(--hairline-light);
-  --color-hairline-dark: var(--hairline-dark);
+
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-on-dark: var(--accent-on-dark);
+
+  --color-line: var(--line);
+  --color-line-dark: var(--line-dark);
 
   --font-sans: var(--font-inter);
+  --font-serif: var(--font-fraunces);
 
   --radius-stage: 28px;
   --radius-card: 18px;
 }
 
-html {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  scroll-behavior: smooth;
-  background: var(--ink);
-}
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    background: var(--paper);
+  }
 
-body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-sans);
-  /* Corpo em 17px: escala de leitura de página de produto premium. */
-  font-size: 17px;
-  line-height: 1.5;
-  letter-spacing: -0.012em;
-}
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.55;
+    letter-spacing: -0.012em;
+  }
 
-::selection {
-  background: var(--ink);
-  color: var(--paper);
-}
+  ::selection {
+    background: var(--accent-strong);
+    color: var(--paper);
+  }
 
-:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 4px;
-  border-radius: 4px;
-}
-
-/*
-  Escala tipográfica. O peso 600 com tracking negativo é o que dá a densidade
-  "premium" — títulos muito grandes precisam de tracking mais fechado para não
-  parecerem soltos.
-*/
-.t-display {
-  font-weight: 600;
-  font-size: clamp(3rem, 8.5vw, 7.5rem);
-  line-height: 1.04;
-  letter-spacing: -0.035em;
-}
-
-.t-title {
-  font-weight: 600;
-  font-size: clamp(2.25rem, 5.2vw, 4.25rem);
-  line-height: 1.07;
-  letter-spacing: -0.028em;
-}
-
-.t-headline {
-  font-weight: 600;
-  font-size: clamp(1.6rem, 3vw, 2.5rem);
-  line-height: 1.12;
-  letter-spacing: -0.022em;
-}
-
-.t-intro {
-  font-size: clamp(1.125rem, 1.6vw, 1.3125rem);
-  line-height: 1.5;
-  letter-spacing: -0.012em;
-}
-
-.t-body {
-  font-size: 1.0625rem;
-  line-height: 1.55;
-  letter-spacing: -0.01em;
-}
-
-.t-caption {
-  font-size: 0.8125rem;
-  line-height: 1.4;
-  letter-spacing: 0;
-}
-
-.t-eyebrow {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-
-/* Rolagem horizontal sem barra visível (galeria de destaques). */
-.scrollbar-none {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.scrollbar-none::-webkit-scrollbar {
-  display: none;
+  :focus-visible {
+    outline: 2px solid var(--accent-strong);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
 }
 
 /*
-  Reveals contidos — o briefing pede animações "muito sutis": apenas fade e
-  um deslocamento curto. O estado inicial fica no CSS para não haver flash
-  antes de o JS assumir.
+  Classes de componente ficam em @layer components de propósito: assim,
+  utilitários do Tailwind (hidden, sm:inline-flex, px-5 etc.) aplicados
+  junto continuam podendo sobrescrevê-las — Tailwind v4 dá prioridade à
+  camada "utilities" sobre "components" independente da ordem no arquivo.
 */
-[data-reveal] {
-  opacity: 0;
-  transform: translateY(14px);
-}
+@layer components {
+  /*
+    Escala tipográfica. Serifa expressiva (Fraunces) nos títulos de maior
+    impacto para dar caráter editorial; sans (Inter) no resto, para manter
+    a legibilidade em textos longos e elementos de interface.
+  */
+  .t-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
 
-.reveal-ready [data-reveal] {
-  opacity: 1;
-  transform: none;
+  .t-display {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(2.75rem, 3.2vw + 2rem, 5.5rem);
+    line-height: 1.03;
+    letter-spacing: -0.02em;
+  }
+
+  .t-headline {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(2rem, 1.4vw + 1.5rem, 3.25rem);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+  }
+
+  .t-title {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(1.5rem, 0.9vw + 1.15rem, 2.25rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .t-subheadline {
+    font-family: var(--font-sans);
+    font-size: clamp(1.0625rem, 0.4vw + 0.95rem, 1.25rem);
+    line-height: 1.55;
+    letter-spacing: -0.006em;
+  }
+
+  .t-body {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    letter-spacing: -0.006em;
+  }
+
+  .t-label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  .t-caption {
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    letter-spacing: 0;
+  }
+
+  /* Botões — um único componente para os dois contextos (claro/escuro). */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    padding: 0.9rem 2rem;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: -0.006em;
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease,
+      border-color 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+  }
+
+  .btn-primary {
+    background: var(--accent-strong);
+    color: var(--paper);
+  }
+
+  .btn-primary:hover {
+    opacity: 0.9;
+  }
+
+  .btn-secondary-light {
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+
+  .btn-secondary-light:hover {
+    border-color: var(--ink);
+  }
+
+  .btn-secondary-dark {
+    border: 1px solid var(--line-dark);
+    color: var(--paper);
+  }
+
+  .btn-secondary-dark:hover {
+    border-color: var(--paper);
+  }
+
+  /* Rolagem horizontal sem barra visível. */
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  /*
+    Reveals sutis — fade com deslocamento curto, disparado ao entrar na
+    viewport. O estado inicial fica no CSS para não haver flash antes do JS.
+  */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  .reveal-ready [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,19 +1,28 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 
-// Inter é a única família do sistema — igual ao app de referência (Type.kt),
-// que usa Inter de W400 a W800 tanto para display quanto para corpo.
+// Inter para corpo e interface — altamente legível em textos longos.
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+});
+
+// Fraunces para títulos — serifa expressiva que dá caráter editorial à
+// marca, contrastando com o sans do corpo para reforçar hierarquia.
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
 const siteTitle = "Maria Eduarda — Contadora";
 const siteDescription =
-  "Maria Eduarda, contadora. Precisão, clareza e confiança em contabilidade.";
+  "Maria Eduarda, contadora. Contabilidade que explica, organiza e acompanha o seu negócio.";
 
 export const metadata: Metadata = {
   title: siteTitle,
@@ -28,8 +37,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="pt-BR" className={`${inter.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col bg-background font-sans text-foreground">
+    <html
+      lang="pt-BR"
+      className={`${inter.variable} ${fraunces.variable} h-full antialiased`}
+    >
+      <body className="flex min-h-full flex-col bg-paper font-sans text-ink">
         {children}
       </body>
     </html>

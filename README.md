@@ -1,222 +1,181 @@
-# Maria Eduarda — Portfólio (Contadora)
+# Maria Eduarda — Site institucional (Contadora)
 
-Site one-page em **Next.js (App Router) + TypeScript + Tailwind CSS v4 + GSAP + Three.js**.
+Site institucional/conversão em **Next.js (App Router) + TypeScript + Tailwind CSS v4 + GSAP**.
 
-Portfólio pessoal — não é site de vendas. Sem preços, planos, pacotes ou
-elementos de SaaS.
+Marca pessoal premium para uma contadora — não um currículo, não uma cópia da
+referência estrutural (contadordireto.com.br). A referência foi usada para
+estratégia e sequência narrativa; a identidade visual, a copy e o layout são
+próprios de Maria Eduarda.
 
 ---
 
 ## 1. Direção de arte
 
-Editorial minimalista premium, seguindo `<design_direction>` do briefing.
+Editorial contemporâneo + consultoria boutique — não escritório contábil
+tradicional, não fintech genérica.
 
-### Paleta — preto e branco puros
+### Paleta — neutros quentes + uma cor de marca
 
 | Token | Hex | Uso |
 |---|---|---|
-| `--ink` | `#000000` | fundo dos palcos escuros, texto sobre claro |
-| `--paper` | `#ffffff` | fundo padrão, texto sobre escuro |
-| `--mist` | `#f7f7f7` | áreas neutras claras |
-| `--graphite` | `#333333` | texto secundário sobre claro |
-| `--slate` | `#6e6e73` | legendas sobre claro (4,9:1) |
-| `--fog` | `#86868b` | legendas sobre escuro (5,7:1) |
+| `--ink` | `#17130f` | fundo dos blocos escuros, texto principal sobre claro |
+| `--paper` | `#fbf8f3` | fundo padrão — marfim, não branco puro |
+| `--paper-strong` | `#ffffff` | superfícies elevadas (cartões) sobre o marfim |
+| `--sand` | `#f1e9dd` | seções alternadas |
+| `--stone` | `#4b443b` | texto secundário sobre claro |
+| `--mute` | `#7a7266` | legendas sobre claro |
+| `--fog` | `#b9af9f` | texto secundário sobre escuro |
+| `--accent` | `#a8632e` | argila — ícones, marcadores, detalhes decorativos |
+| `--accent-strong` | `#7c4a22` | argila escura — fundo sólido de CTA (com texto marfim), ~6:1 |
+| `--accent-on-dark` | `#d79a5d` | argila clara — eyebrows/links sobre fundo escuro |
 
-Contraste de 21:1 entre `#000` e `#fff`. Sem cor corporativa, sem gradiente
-chamativo. Os dois cinzas de legenda foram escolhidos por medida de contraste,
-não por aparência: cada um só é usado no fundo onde passa em AA.
+Uma única cor de marca, usada com parcimônia (CTAs, links, ícones, pequenos
+detalhes) — a hierarquia principal vem de tipografia, espaço e proporção.
 
 ### Tipografia
 
-Uma família só (**Inter**, pesos 400/500/600), com escala e tracking calibrados
-para leitura de página de produto: corpo em 17px e tracking negativo crescente
-conforme o tamanho sobe.
+Duas famílias com papéis bem definidos:
 
-| Classe | Peso | Tracking |
-|---|---|---|
-| `.t-display` | 600 | −0.035em |
-| `.t-title` | 600 | −0.028em |
-| `.t-headline` | 600 | −0.022em |
-| `.t-intro` / `.t-body` | 400 | −0.012em / −0.01em |
+- **Fraunces** (serifada, expressiva) — headline, subtítulos de seção e
+  números de destaque. Dá caráter editorial.
+- **Inter** (sans, altíssima legibilidade) — corpo, navegação, formulário,
+  labels.
 
-> **Nota sobre a fonte.** A tipografia da Apple (SF Pro) é proprietária e não
-> pode ser distribuída num site de terceiros. Inter é a equivalente aberta mais
-> próxima — mesma linhagem neogrotesca, altura-x alta. O que aproxima a leitura
-> do padrão premium não é o arquivo da fonte, e sim o tracking negativo, o peso
-> 600 nos títulos e a escala de corpo em 17px.
->
-> O briefing sugeria misturar serifa nos títulos com sans no corpo
-> (`<design_direction>`); a estética pedida depois é integralmente sans. Mantive
-> sans em tudo por causa dessa segunda instrução — se preferir a serifada nos
-> títulos, é trocar `.t-display` e `.t-title` em `globals.css`.
+| Classe | Papel |
+|---|---|
+| `.t-eyebrow` | rótulo pequeno, maiúsculo, cor de marca |
+| `.t-display` | headline do hero (serifada) |
+| `.t-headline` | título de seção (serifada) |
+| `.t-title` | subtítulo de cartão/bloco (serifada) |
+| `.t-subheadline` | linha de apoio do hero (sans) |
+| `.t-body` | corpo de texto (sans) |
+| `.t-label` | navegação, campos de formulário |
+| `.t-caption` | legendas pequenas |
+
+Escala responsiva via `clamp()` em todas as classes de título.
+
+> **Nota de arquitetura CSS.** As classes acima e `.btn*` vivem dentro de
+> `@layer components` em `globals.css`. Isso é proposital: no Tailwind v4 a
+> camada `utilities` tem prioridade sobre `components` independente de
+> especificidade — colocar componentes fora de qualquer `@layer` fazia com
+> que utilitários como `hidden`/`sm:inline-flex` perdessem para `.btn`. Ao
+> mexer em `globals.css`, mantenha classes de componente dentro de
+> `@layer components`.
 
 ### Movimento
 
-O briefing pede animações **muito sutis**. Só há dois recursos: fade com
-deslocamento de 14px na entrada das seções, e rotação lenta do objeto 3D.
-Nenhuma curva de overshoot, mola ou bounce.
-
-### Estrutura das seções
-
-A gramática é de página de produto — palco escuro sangrando, tipografia de
-display, sub-nav fixa, galeria horizontal com encaixe —, aplicada a conteúdo de
-portfólio. Nenhum layout, texto ou componente foi copiado das referências.
+Reveals sutis (fade + 16px de deslocamento) disparados ao entrar na
+viewport, via GSAP ScrollTrigger (`src/lib/gsap.ts`). `prefers-reduced-motion`
+desliga tudo e mostra o estado final direto.
 
 ---
 
-## 2. O objeto 3D
+## 2. Estrutura da página
 
-`src/components/Stage3D.tsx` — sete lâminas finas de cantos arredondados
-empilhadas em hélice, metal escovado, luz de contorno forte sobre preto.
+Narrativa: atenção → identificação → confiança → clareza → intenção → contato.
 
-A escolha é deliberada: lê-se como camadas, ordem e precisão, sem recorrer aos
-clichês que o briefing proíbe (calculadora, pilha de moedas, ícones de agência).
+```
+Header (nav fixa + CTA "Falar com Maria")
+Hero (headline de transformação + foto + CTAs)
+ValueProps (4 diferenciais rápidos)
+About (quem é Maria, como trabalha)
+ProblemSolution (identificação com dores → solução)
+Services (serviços agrupados por necessidade: Começar/Manter/Organizar/Decidir)
+Audience (perfis atendidos + verificador de região)
+Process (4 passos do primeiro contato ao atendimento)
+Trust (princípios de confiança + espaço para depoimentos reais)
+FAQ (acordeão acessível, remove objeções)
+FinalCta (CTA + formulário que monta mensagem de WhatsApp)
+Footer
+```
 
-Decisões de performance, porque o briefing exige LCP < 2s e Lighthouse ≥ 90:
-
-- `three` puro, sem react-three-fiber/drei — bundle bem menor;
-- carregado por `import()` dinâmico **depois** da montagem, nunca no caminho
-  crítico: o texto pinta primeiro;
-- checagem de WebGL antes de carregar; sem suporte, nada é baixado;
-- `devicePixelRatio` limitado a 2;
-- laço de render pausado quando o canvas sai da viewport;
-- ambiente procedural (`RoomEnvironment`), sem baixar HDR;
-- com `prefers-reduced-motion`, desenha um único quadro e não abre laço;
-- `dispose()` de geometria, material, textura e renderer no unmount.
-
-O objeto ocupa uma faixa própria **abaixo** do texto, nunca atrás dele — o
-contraste do display fica garantido pela estrutura, e não por ajuste de
-iluminação que quebraria em outra tela.
-
----
-
-## 3. Estrutura
+### Arquivos
 
 ```
 src/
 ├── app/
-│   ├── layout.tsx          # Inter, metadata pt-BR
-│   ├── page.tsx            # composição da página
-│   └── globals.css         # tokens + escala tipográfica
+│   ├── layout.tsx      # Inter + Fraunces, metadata pt-BR
+│   ├── page.tsx         # composição da página
+│   └── globals.css      # tokens + tipografia + botões (@layer components)
 ├── components/
-│   ├── SubNav.tsx          # barra fixa que surge após o palco
-│   ├── Hero.tsx            # palco de abertura + objeto 3D
-│   ├── Stage3D.tsx         # cena Three.js (carregada sob demanda)
-│   ├── Overture.tsx        # uma frase, sozinha na tela
-│   ├── Chapters.tsx        # capítulos alternados + faixa do retrato
-│   ├── Highlights.tsx      # especialidades em galeria horizontal
-│   ├── Differentiators.tsx # faixa de diferenciais
-│   ├── Trajectory.tsx      # formação e experiência
-│   ├── Contact.tsx         # contato + formulário
+│   ├── Header.tsx
+│   ├── Hero.tsx
+│   ├── ValueProps.tsx
+│   ├── About.tsx
+│   ├── ProblemSolution.tsx
+│   ├── Services.tsx
+│   ├── Audience.tsx
+│   ├── RegionalFilter.tsx
+│   ├── Process.tsx
+│   ├── Trust.tsx
+│   ├── FAQ.tsx
+│   ├── FinalCta.tsx
 │   └── Footer.tsx
-├── content/site.ts         # TODO o conteúdo editável
-└── lib/gsap.ts             # eases contidos, useGsap, useReducedMotion
+├── content/site.ts       # TODO o conteúdo editável
+└── lib/gsap.ts           # eases contidos, useGsap, useReducedMotion
 ```
-
-`public/fallback.html` é a versão estática (sem JS) das seções Abertura e
-Contato, na mesma paleta.
 
 ---
 
-## 4. Dados pendentes
+## 3. Filtro de região
+
+A região real de atendimento de Maria ainda não foi confirmada. O
+verificador em `RegionalFilter.tsx` foi construído para não inventar nada:
+com `regionalFilter.servedLocations` vazio (estado atual), ele sempre
+responde de forma honesta, convidando a falar direto com Maria. Assim que a
+lista de cidades/estados for confirmada, preencha o array em
+`content/site.ts` e o verificador passa a comparar de verdade.
+
+## 4. Contato / geração de leads
+
+Não há backend. O formulário do CTA final monta uma mensagem e abre o
+WhatsApp de Maria já preenchido (`https://wa.me/...`) — o canal real de
+contato informado por ela, com fricção mínima. O e-mail (`contact.email`)
+fica oculto até haver um endereço confirmado.
+
+---
+
+## 5. Dados pendentes
 
 Nada foi inventado. Preencher em **`src/content/site.ts`**:
 
-- [ ] `hero.statement` — a frase curta de impacto.
-- [ ] `hero.intro` — a linha de apoio.
-- [ ] `overture.statement` — a frase de abertura da narrativa.
-- [ ] `chapters[]` — os textos de *O que*, *Por que* e *Como*.
-- [ ] `highlights[]` — as quatro áreas de atuação.
-- [ ] `differentiators[]` — **só o que for real**. Se não houver dado concreto
-      para um item, apague-o em vez de estimar.
-- [ ] `trajectory[]` — formação, certificações e marcos com datas.
-- [ ] `contact.email` / `contact.whatsapp` / `contact.intro`.
-- [ ] `portrait.src` — trocar o placeholder por uma fotografia real em P&B
-      (paisagem, ~16:7).
-
-Atualizar `public/fallback.html` em paralelo.
+- [ ] `about.background` — formação, especialização e tempo de atuação de Maria.
+- [ ] `about.credentials[]` — registro no CRC, certificações (a seção só
+      aparece quando preenchida).
+- [ ] `regionalFilter.servedLocations[]` — cidades/estados atendidos, ou
+      `"Atendimento 100% online"`.
+- [ ] `faq` — a resposta de "O atendimento é presencial ou online?".
+- [ ] `contact.email` — deixar vazio oculta o link no rodapé.
+- [ ] `trust.testimonials[]` — só publicar depoimentos reais (a seção some
+      até ser preenchida).
+- [ ] Confirmar o `@` do Instagram em `contact.instagram` antes de publicar.
+- [ ] Revisar a lista exata de `services[]` com Maria — o conteúdo atual
+      usa nomenclatura padrão do setor contábil como ponto de partida.
 
 ---
 
-## 5. Comandos
+## 6. Comandos
 
 ```bash
 npm install
 npm run dev      # desenvolvimento
-npm run build    # build de produção (saída estática)
+npm run build    # build de produção
 npm run start    # servir o build
 npm run lint
 ```
 
 ---
 
-## 6. Acessibilidade
+## 7. Acessibilidade e verificação
 
-- Contraste 21:1 no par principal; os cinzas de legenda foram medidos e cada um
-  só aparece sobre o fundo em que passa em AA.
-- `prefers-reduced-motion` desliga todas as animações e reduz a cena 3D a um
-  único quadro estático.
-- HTML semântico, foco visível em tudo, `aria-label` nos ícones e âncoras.
-- A galeria horizontal é focável e rola pelo teclado; as setas são atalho, não
-  o único caminho.
-- Formulário com `<label>` real em cada campo.
-
----
-
-## 7. Comparativo de stack
-
-| Item | **Next.js + Tailwind** (adotado) | React + Vite + Tailwind |
-|---|---|---|
-| Tipo | Framework full-stack (SSR/SSG, roteamento automático) | Build tool SPA, roteamento manual |
-| Vantagens | SSG nativo (bom SEO), otimização de imagem/fonte integrada, convenções claras | Setup leve, HMR instantâneo, bundle mínimo |
-| Desvantagens | Mais ferramentas embutidas para aprender | SEO/SSR manuais, menos convenções |
-| Esforço | Scaffold e Tailwind já integrados; `next/image` e `next/font` prontos | Exigiria configurar Vite, Tailwind, meta tags e imagens à mão |
-| Indicado para | Portfólios estáticos com SEO (este caso) | SPAs simples onde o tempo de setup é crítico |
-
----
-
-## 8. Cronograma
-
-```mermaid
-gantt
-    dateFormat  YYYY-MM-DD
-    title Cronograma do Projeto de Portfólio
-    section Design
-    Direção de arte e sistema visual :done, a1, 2026-08-27, 1d
-    section Desenvolvimento
-    Implementação das seções :done, a2, after a1, 1d
-    Palco 3D e movimento :done, a3, after a2, 1d
-    Testes (responsividade + acessibilidade) :done, a4, after a3, 1d
-    section Conteúdo
-    Preenchimento de dados reais :active, a5, after a4, 3d
-    Fotografia profissional :a6, after a4, 3d
-    section Publicação
-    Revisão final e deploy :a7, after a5, 1d
-```
-
----
-
-## 9. Verificação realizada
-
-| Item | Resultado |
-|---|---|
-| `npm run build` | sem erros, rota estática |
-| `npm run lint` / `tsc --noEmit` | limpos |
-| Console do navegador | sem erros |
-| WebGL / canvas 3D | renderizando |
-| Overflow horizontal | ausente |
-| Movimento reduzido | animações desligadas, cena em quadro único |
-
----
-
-## 10. Conformidade com as proibições do briefing
-
-| Proibição | Situação |
-|---|---|
-| Copiar textos ou layouts das referências | Só a gramática estrutural; todo o texto e o layout são próprios |
-| Preços, planos, pacotes, SaaS | Ausentes |
-| Depoimentos ou clientes inventados | Ausentes — os cards de citação anteriores foram removidos |
-| Imagens de estoque e ícones clichês | Nenhum; o objeto 3D é geometria abstrata própria |
-| Seções irrelevantes (equipe, blog, várias páginas) | Ausentes — scroll único |
-| "Sobre mim" genérico | Os campos pedem narrativa concreta, não adjetivos |
-| Dados fictícios | Nenhum; tudo em `[INSIRA ...]` até você preencher |
+- Contraste verificado nos pares texto/fundo principais (`--accent-strong`
+  sobre `--paper`/`--paper-strong` ≥ 6:1).
+- `prefers-reduced-motion` desliga as animações.
+- FAQ em `<details>/<summary>` nativos — acessível por teclado e leitor de
+  tela sem JavaScript extra.
+- Formulários com `<label>` associado a cada campo; verificador de região
+  com `aria-live="polite"`.
+- `npm run build`, `npm run lint` e `tsc --noEmit` limpos.
+- Testado sem overflow horizontal em 390px, 768px, 1440px; sem erros de
+  console; header, menu mobile, acordeão de FAQ e verificador de região
+  testados interativamente.
